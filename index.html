@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio TDH DOOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* Hide main body scroll to rely on container */
+        }
+
+        /* Swiper / Scroll Snapping */
+        .mockup-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Colors based on industrial fire doors */
+        .bg-brand-red {
+            background-color: #C1121F;
+        }
+
+        .bg-brand-dark {
+            background-color: #1A1A1A;
+        }
+
+        .text-brand-red {
+            color: #C1121F;
+        }
+
+        /* Abstract shapes */
+        .shape-1 {
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 120%;
+            height: 50%;
+            background: #C1121F;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-5deg);
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .shape-2 {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: rgba(193, 18, 31, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Devices */
+        .device {
+            position: relative;
+            z-index: 10;
+            background: #000;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 10px solid #222;
+        }
+
+        .device iframe,
+        .device img,
+        .imac iframe,
+        .macbook iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+            display: block;
+        }
+
+        /* Mockup: iPad */
+        .ipad {
+            width: 500px;
+            height: 700px;
+            border-radius: 20px;
+            border-width: 12px;
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+
+        .ipad:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        /* Mockup: iPhone */
+        .iphone {
+            width: 250px;
+            height: 500px;
+            border-radius: 35px;
+            border-width: 8px;
+            position: absolute;
+            bottom: -50px;
+            right: -100px;
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+        }
+
+        /* Mockup: iMac */
+        .imac-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .imac {
+            width: 800px;
+            height: 450px;
+            background: #111;
+            border: 16px solid #222;
+            border-bottom-width: 40px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .imac-stand {
+            width: 120px;
+            height: 80px;
+            background: linear-gradient(to bottom, #ccc, #888);
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+        }
+
+        .imac-base {
+            width: 200px;
+            height: 10px;
+            background: #aaa;
+            border-radius: 5px;
+        }
+
+        /* Mockup: Macbook */
+        .macbook {
+            width: 700px;
+            height: 420px;
+            background: #000;
+            border: 12px solid #222;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .macbook-keyboard {
+            width: 850px;
+            height: 20px;
+            background: linear-gradient(to bottom, #d4d4d4, #999);
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            z-index: 11;
+            margin-top: -2px;
+        }
+
+        /* ---  Responsive Mobile Overrides --- */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 10% 5%;
+                overflow-y: auto;
+                /* Allow internal slide scrolling if content is too tall */
+                scroll-snap-align: start;
+            }
+
+            .bg-brand-red h1 {
+                font-size: 2.5rem;
+                margin-top: -30px;
+                line-height: 1.1;
+                margin-bottom: 20px;
+            }
+
+            .bg-brand-red p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            /* Scale down Hero Devices */
+            .ipad {
+                transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(0.6);
+                transform-origin: center top;
+                margin-top: -50px;
+            }
+
+            .ipad:hover {
+                transform: scale(0.6);
+            }
+
+            .iphone {
+                transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(0.5);
+                bottom: -20px;
+                right: -20%;
+                z-index: 20;
+            }
+
+            /* Scale down iMac */
+            .imac-wrapper {
+                transform: scale(0.4);
+                transform-origin: center top;
+                margin-top: -40px;
+            }
+
+            /* Scale down Macbook */
+            .macbook-container {
+                /* Applies scale to the hover wrapper */
+                transform: scale(0.4) !important;
+                transform-origin: center top;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mockup-container">
+
+        <!-- Slide 1: Hero Showcase (iPad & iPhone) -->
+        <div class="slide bg-[#F8EAEA] flex-col md:flex-row justify-between px-10 md:px-20">
+            <div class="shape-1"></div>
+            <div class="shape-2"></div>
+
+            <div class="z-20 w-full md:w-1/2 flex flex-col justify-center items-start mb-10 md:mb-0">
+                <span
+                    class="bg-brand-red text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Dự
+                    Án Thiết
+                    Kế Website Profile Giới Thiệu Doanh Nghiệp</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-brand-dark mt-6 mb-4">TDH DOOR x MOTI </h1>
+                <h2 class="text-xl md:text-3xl font-light text-brand-red pr-10">HỆ THỐNG CỬA CHỐNG CHÁY CAO CẤP</h2>
+            </div>
+
+            <div class="z-10 w-full md:w-1/2 flex items-center justify-center relative">
+                <div class="device ipad">
+                    <iframe src="https://tdhdoor.com/vi" title="TDH Door"></iframe>
+                </div>
+                <div class="device iphone">
+                    <iframe src="https://tdhdoor.com/vi" title="TDH Door Mobile"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Brand Overview -->
+        <div class="slide bg-brand-red text-white flex-col md:flex-row px-10 md:px-32">
+            <div class="w-full md:w-1/2 z-10 pr-10">
+                <h1 class="text-6xl font-extrabold mb-8 uppercase tracking-widest leading-tight">Brand<br>Overview</h1>
+                <p class="text-lg md:text-xl leading-relaxed font-light mb-6 opacity-90">
+                    Trong môi trường công nghiệp đầy tính cạnh tranh, sự an toàn và chất lượng luôn là ưu tiên hàng đầu.
+                    <strong>TDH DOOR</strong> cung cấp các giải pháp cửa chống cháy, cửa thép chuyên dụng với độ bền bỉ
+                    vượt thời gian, không chỉ bảo vệ tài sản mà còn mang lại sự an tâm tuyệt đối cho mọi công trình.
+                </p>
+                <p class="text-lg md:text-xl leading-relaxed font-light opacity-90">
+                    Với tiêu chuẩn nghiệm thu khắt khe PCCC, chúng tôi tự hào đồng hành cùng các nhà máy, toà nhà, bệnh
+                    viện trên toàn Việt Nam.
+                </p>
+            </div>
+            <div class="w-full md:w-1/2 z-10 relative mt-10 md:mt-0">
+                <div
+                    class="w-full h-[500px] bg-white rounded-3xl overflow-hidden shadow-2xl relative border-4 border-white/20 flex items-center justify-center p-4">
+                    <img src="./brandoverview tdh door.png"
+                        alt="TDH Door Brand Overview" class="w-full h-full object-contain z-10 relative rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-red/10 to-transparent">
+                    </div>
+                </div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-white rounded-full opacity-20 blur-3xl"></div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Desktop iMac View -->
+        <div class="slide bg-white">
+            <div class="absolute inset-0 bg-gradient-to-tr from-gray-100 to-white z-0"></div>
+            <div class="shape-2 !bg-[#F8EAEA] !-top-20 !-left-20"></div>
+
+            <div class="z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+                <h2 class="text-3xl font-bold text-gray-800 tracking-wider mb-10 text-center uppercase">Chất Lượng Thép
+                    Đỉnh Cao</h2>
+                <div class="imac-wrapper">
+                    <div class="imac">
+                        <iframe src="https://tdhdoor.com/vi/san-pham" title="TDH Door Products"></iframe>
+                    </div>
+                    <div class="imac-stand"></div>
+                    <div class="imac-base"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Macbook View & Layout -->
+        <div class="slide bg-[#111] text-white overflow-hidden relative">
+            <div
+                class="absolute top-0 right-0 w-1/2 h-full bg-brand-red transform skew-x-12 translate-x-32 z-0 opacity-80">
+            </div>
+
+            <div class="z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+                <h2 class="text-3xl font-light text-gray-300 tracking-wider mb-16 text-center uppercase">Responsive &
+                    Hiện Đại</h2>
+                <div
+                    class="macbook-container flex flex-col items-center transform transition hover:scale-105 duration-700">
+                    <div class="macbook">
+                        <iframe src="https://tdhdoor.com/vi/du-an-noi-bat" title="TDH Door Projects"></iframe>
+                    </div>
+                    <div class="macbook-keyboard relative flex justify-center">
+                        <div class="w-32 h-2 bg-gray-400 rounded-b-lg mt-1 absolute top-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
